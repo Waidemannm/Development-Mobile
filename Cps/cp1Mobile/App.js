@@ -15,7 +15,7 @@ export default function App() {
     if(dados == true){
       alert("Informações de cadastro alterada!")
     }else{
-      alert("Formulário Limpo!")
+      alert("Bem vindo ao Cp1 - Preencha o formulário!")
     }
   }, [dados]) 
 
@@ -60,7 +60,7 @@ export default function App() {
 
         <View style={styles.botoes}>
           <Button title='Cadastrar' onPress={() => { setDados(true)}}/>
-          <Button  title='Limpar Formulário' onPress={() => { setDados(false), setCurso(""), setDescricao(""), setNome(""), setDisciplina("")}}/>
+          <Button  title='Reiniciar Cp1' onPress={() => { setDados(false), setCurso(""), setDescricao(""), setNome(""), setDisciplina("")}}/>
         </View>
         
       </View>
