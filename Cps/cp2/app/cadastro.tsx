@@ -1,7 +1,35 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from "react";
+import { MaskedTextInput } from 'react-native-mask-text';
+import { useRouter } from "expo-router";
 
 export default function Cadastro() {
+    const router = useRouter();
+    const [nome, setNome] = useState("");
+    const [rm, setRm] = useState("");
+    const [telefone, setTelefone]= useState("");
+    const [cpf, setCpf] = useState("");
+
+    const [usuario, setUsuario] = useState({});
+
+    async function SalvarUsuario() {
+        if(!nome || !rm || !telefone || !cpf){
+            Alert.alert("Erro ao salvar", "Preencha corretamente o formulário", [{text: "Fechar", style:"cancel"}])
+        }else{
+            let novoUsuario = {nomeUser: nome, rmUser: rm, telefoneUser: telefone, cpfUser: cpf};
+            setUsuario(novoUsuario);
+            await AsyncStorage.setItem("PRODUTOS",JSON.stringify(novoUsuario));        
+            alert("Salvo");
+            router.push({pathname: "/perfil"});
+        }
+    }
+
+
+        
+
+   
   return (
     <SafeAreaView style={styles.container}>
       
@@ -20,14 +48,46 @@ export default function Cadastro() {
           Preencha seus dados corretamente para acessar seu perfil completo.
         </Text>
 
-        <Text style={styles.highlight}>
-          ✔ Dados seguros  
-          {"\n"}✔ Navegação simples  
-          {"\n"}✔ Experiência rápida
-        </Text>
+        <View style={styles.camp}>
+            <MaskedTextInput
+            placeholder="Nome"
+            style={styles.input}
+            value={nome}
+            onChangeText={(text)=>setNome(text)}
+            />
+            <MaskedTextInput
+            type="custom"
+            mask="AA999999"
+            placeholder="Rm (RM999999)"
+            style={styles.input}
+            value={rm}
+            onChangeText={(text)=>setRm(text)}
+            />
+            <MaskedTextInput
+            type="custom"
+            mask="(99) 9 9999-9999"
+            placeholder="Telefone"
+            style={styles.input}
+            value={telefone}
+            onChangeText={(text)=>setTelefone(text)}
+            />
+            <MaskedTextInput
+            type="cpf"
+            keyboardType="numeric"
+            mask="999.999.999-99"
+            placeholder="Cpf"
+            style={styles.input}
+            value={cpf}
+            onChangeText={(text)=>setCpf(text)}
+            />
+            <TouchableOpacity style={styles.btn} onPress={SalvarUsuario}>
+                <Text>Salvar</Text>
+            </TouchableOpacity>
+      </View>
 
-        <Text style={styles.footer}>
-          Toque em continuar para iniciar seu cadastro
+        <Text style={styles.highlight}>
+            {"\n"}✔ Navegação simples  
+            {"\n"}✔ Experiência rápida
         </Text>
       </View>
 
@@ -38,7 +98,7 @@ export default function Cadastro() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#c4ff9d",
+    backgroundColor: "#7e6ef1",
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
@@ -74,12 +134,24 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: "500",
   },
-
-  footer: {
-    marginTop: 20,
-    fontSize: 12,
-    color: "#555",
-    fontStyle: "italic",
-    textAlign: "center",
+  camp:{
+    gap:5,
+  },
+  input:{
+    borderWidth:1,
+    height:38,
+    width:300,
+    padding:10,
+    borderRadius:15,
+    marginVertical:3
+  },
+  btn:{
+    height:50,
+    width:300,
+    borderRadius:15,
+    backgroundColor:"#c1e61f",
+    alignItems:"center",
+    justifyContent:"center",
+    marginVertical:3
   },
 });
