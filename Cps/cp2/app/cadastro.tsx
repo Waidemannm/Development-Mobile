@@ -14,22 +14,41 @@ export default function Cadastro() {
 
     const [usuario, setUsuario] = useState({});
 
+    function validarCampos() {
+        if (!nome || !rm || !telefone || !cpf) {
+            return "Preencha todos os campos";
+        }
+        if (rm.length < 8) {
+            return "RM inválido";
+        }
+        if (telefone.length < 15) {
+            return "Telefone inválido";
+        }
+        if (cpf.length < 14) {
+            return "CPF inválido";
+        }
+
+        return null;
+    }
+
     async function SalvarUsuario() {
-        if(!nome || !rm || !telefone || !cpf){
-            Alert.alert("Erro ao salvar", "Preencha corretamente o formulário", [{text: "Fechar", style:"cancel"}])
+        let error = validarCampos()
+        if(error){
+            Alert.alert("Erro ao salvar", error, [{text: "Fechar", style:"cancel"}])
         }else{
-            let novoUsuario = {nomeUser: nome, rmUser: rm, telefoneUser: telefone, cpfUser: cpf};
+            let novoUsuario = {
+                nomeUser: nome, 
+                rmUser: rm, 
+                telefoneUser: telefone, 
+                cpfUser: cpf
+            };
             setUsuario(novoUsuario);
-            await AsyncStorage.setItem("PRODUTOS",JSON.stringify(novoUsuario));        
-            alert("Salvo");
+            await AsyncStorage.setItem("USUARIO",JSON.stringify(novoUsuario));        
+            alert("Usuário Salvo");
             router.push({pathname: "/perfil"});
         }
     }
 
-
-        
-
-   
   return (
     <SafeAreaView style={styles.container}>
       
@@ -65,7 +84,7 @@ export default function Cadastro() {
             />
             <MaskedTextInput
             type="custom"
-            mask="(99) 9 9999-9999"
+            mask="(99) 99999-9999"
             placeholder="Telefone"
             style={styles.input}
             value={telefone}
