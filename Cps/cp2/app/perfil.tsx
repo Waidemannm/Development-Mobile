@@ -9,21 +9,24 @@ export default function Perfil(){
     const [rm, setRm] = useState("");
     const [telefone, setTelefone]= useState("");
     const [cpf, setCpf] = useState("");
-
+    
     const [usuario, setUsuario] = useState({});
+
+    const buscarDados = BuscarDados()
 
     useEffect(() => {
         BuscarDados();
-    }, [BuscarDados()]) 
+    }, [buscarDados]) 
 
     async function BuscarDados(){
         let data = await AsyncStorage.getItem("USUARIO");
         if(data != null){
-            setUsuario(JSON.parse(data));
-            setNome(JSON.parse(data).nomeUser)
-            setRm(JSON.parse(data).rmUser)
-            setTelefone(JSON.parse(data).telefoneUser)
-            setCpf(JSON.parse(data).cpfUser)
+            const usuarioObj = JSON.parse(data);
+            setUsuario(usuarioObj);
+            setNome(usuarioObj.nomeUser)
+            setRm(usuarioObj.rmUser)
+            setTelefone(usuarioObj.telefoneUser)
+            setCpf(usuarioObj.cpfUser)
         }
     }
     

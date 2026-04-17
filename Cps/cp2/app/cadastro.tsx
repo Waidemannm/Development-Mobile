@@ -14,6 +14,22 @@ export default function Cadastro() {
 
     const [usuario, setUsuario] = useState({});
 
+    useEffect(() => {
+        BuscarDados();
+    }, []) 
+
+    async function BuscarDados(){
+        let data = await AsyncStorage.getItem("USUARIO");
+        if(data != null){
+            const usuarioObj = JSON.parse(data);
+            setUsuario(usuarioObj);
+            setNome(usuarioObj.nomeUser)
+            setRm(usuarioObj.rmUser)
+            setTelefone(usuarioObj.telefoneUser)
+            setCpf(usuarioObj.cpfUser)
+        }
+    }
+
     function validarCampos() {
         if (!nome || !rm || !telefone || !cpf) {
             return "Preencha todos os campos";
@@ -53,61 +69,56 @@ export default function Cadastro() {
     <SafeAreaView style={styles.container}>
       
       <View style={styles.content}>
-        <Text style={styles.title}>Bem-vindo</Text>
+            <Text style={styles.title}>Bem-vindo</Text>
 
-        <Text style={styles.subtitle}>
-          Sistema de Cadastro de Usuário
-        </Text>
+            <Text style={styles.subtitle}>
+            Sistema de Cadastro de Usuário
+            </Text>
 
-        <Text style={styles.description}>
-          Aqui você poderá registrar suas informações de forma rápida e segura.
-        </Text>
+            <Text style={styles.description}>
+            Aqui você poderá registrar suas informações.
+            </Text>
 
-        <Text style={styles.description}>
-          Preencha seus dados corretamente para acessar seu perfil completo.
-        </Text>
+            <Text style={styles.description}>
+            Preencha seus dados corretamente para acessar seu perfil completo.
+            </Text>
 
-        <View style={styles.camp}>
-            <MaskedTextInput
-            placeholder="Nome"
-            style={styles.input}
-            value={nome}
-            onChangeText={(text)=>setNome(text)}
-            />
-            <MaskedTextInput
-            type="custom"
-            mask="AA999999"
-            placeholder="Rm (RM999999)"
-            style={styles.input}
-            value={rm}
-            onChangeText={(text)=>setRm(text)}
-            />
-            <MaskedTextInput
-            type="custom"
-            mask="(99) 99999-9999"
-            placeholder="Telefone"
-            style={styles.input}
-            value={telefone}
-            onChangeText={(text)=>setTelefone(text)}
-            />
-            <MaskedTextInput
-            type="cpf"
-            keyboardType="numeric"
-            mask="999.999.999-99"
-            placeholder="Cpf"
-            style={styles.input}
-            value={cpf}
-            onChangeText={(text)=>setCpf(text)}
-            />
-            <TouchableOpacity style={styles.btn} onPress={SalvarUsuario}>
-                <Text>Salvar</Text>
-            </TouchableOpacity>
-      </View>
-
-        <Text style={styles.highlight}>
-            {"\n"}✔ Navegação simples  
-            {"\n"}✔ Experiência rápida
-        </Text>
+            <View style={styles.camp}>
+                <MaskedTextInput
+                placeholder="Nome"
+                style={styles.input}
+                value={nome}
+                onChangeText={(text)=>setNome(text)}
+                />
+                <MaskedTextInput
+                type="custom"
+                mask="AA999999"
+                placeholder="Rm (RM999999)"
+                style={styles.input}
+                value={rm}
+                onChangeText={(text)=>setRm(text)}
+                />
+                <MaskedTextInput
+                type="custom"
+                mask="(99) 99999-9999"
+                placeholder="Telefone"
+                style={styles.input}
+                value={telefone}
+                onChangeText={(text)=>setTelefone(text)}
+                />
+                <MaskedTextInput
+                type="cpf"
+                keyboardType="numeric"
+                mask="999.999.999-99"
+                placeholder="Cpf"
+                style={styles.input}
+                value={cpf}
+                onChangeText={(text)=>setCpf(text)}
+                />
+                <TouchableOpacity style={styles.btn} onPress={SalvarUsuario}>
+                    <Text>Salvar</Text>
+                </TouchableOpacity>
+            </View>
       </View>
 
     </SafeAreaView>
