@@ -14,6 +14,9 @@ Aplicativo mobile desenvolvido com Expo e Expo Router, com foco em cadastro de u
 - Autopreenchimento automático ao abrir o app  
 
 ---
+## Link vídeo 
+
+https://www.youtube.com/watch?v=6ih8zK6Ysic
 
 ## 🧭 Telas
 
@@ -38,3 +41,4 @@ Biblioteca utilizada: react-native-mask-text
 Instalação:
 ```bash
 npx expo install react-native-mask-text
+
