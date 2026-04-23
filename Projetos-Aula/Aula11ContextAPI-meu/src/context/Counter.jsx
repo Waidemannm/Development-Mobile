@@ -1,6 +1,5 @@
 import { createContext,useContext,useState } from "react";
 
-
 //Criando um contexto vazio
 const CounterContext = createContext()
 
@@ -30,4 +29,3 @@ export function CounterProvider({children}){
 export function useCounter(){
     return useContext(CounterContext)
 }
-
